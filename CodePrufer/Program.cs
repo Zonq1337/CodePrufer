@@ -12,12 +12,13 @@ namespace CodePrufer
         static void Main()
         {
             var graph = new Dictionary<int, List<int>>();  // вершина и смежные 
-            Console.WriteLine("Введите рёбра графа");
 
-            while (true)
+            // Чтение данных из файла
+            string[] lines = File.ReadAllLines("input.txt");
+
+            foreach (string input in lines)
             {
-                string input = Console.ReadLine();
-                if (input == "bb") break;
+                if (input.Trim() == "bb") break;
 
                 var nodes = input.Split().Select(int.Parse).ToArray();
                 int a = nodes[0], b = nodes[1];
@@ -28,6 +29,7 @@ namespace CodePrufer
                 graph[a].Add(b);
                 graph[b].Add(a);
             }
+
             // код прюфера, степени, листья
             var pruferCode = new List<int>();
             var degree = new Dictionary<int, int>();
@@ -57,6 +59,7 @@ namespace CodePrufer
             }
 
             Console.WriteLine("Код Прюфера: " + string.Join(" ", pruferCode));
+            File.WriteAllText("output.txt", string.Join(" ", pruferCode));
         }
     }
 }
